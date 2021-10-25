@@ -22,6 +22,7 @@
 
 import config as cf
 import model
+import datetime
 import csv
 
 
@@ -31,7 +32,54 @@ El controlador se encarga de mediar entre la vista y el modelo.
 
 # Inicialización del Catálogo de libros
 
+def init():
+    """
+    Llama la funcion de inicializacion  del modelo.
+    """
+    # catalog es utilizado para interactuar con el modelo
+    analyzer = model.newAnalyzer()
+    return analyzer
+
+def loadData(analyzer, avistamientofile):
+    """
+    Carga los datos de los archivos CSV en el modelo
+    """
+    avistamientofile = cf.data_dir + avistamientofile
+    input_file = csv.DictReader(open(avistamientofile, encoding="utf-8"),
+                                delimiter=",")
+    for avistamiento in input_file:
+        model.addAvistamiento(analyzer, avistamiento)
+    return analyzer
+
+def AvistamientoSize(analyzer):
+    """
+    Numero de crimenes leidos
+    """
+    return model.AvistamientoSize(analyzer)
+
 # Funciones para la carga de datos
+def getAvistamientos(analyzer):
+    return model.getAvistamientos(analyzer)
+
+def getCrimesByRange(analyzer, initialDate, finalDate):
+    """
+    Retorna el total de crimenes en un rango de fechas
+    """
+    initialDate = datetime.datetime.strptime(initialDate, '%Y-%m-%d')
+    finalDate = datetime.datetime.strptime(finalDate, '%Y-%m-%d')
+    return model.getCrimesByRange(analyzer, initialDate.date(),
+                                  finalDate.date())
+
+
+def getCrimesByRangeCode(analyzer, initialDate,
+                         offensecode):
+    """
+    Retorna el total de crimenes de un tipo especifico en una
+    fecha determinada
+    """
+    initialDate = datetime.datetime.strptime(initialDate, '%Y-%m-%d')
+    return model.getCrimesByRangeCode(analyzer, initialDate.date(),
+                                      offensecode)
 
 # Funciones de ordenamiento
 

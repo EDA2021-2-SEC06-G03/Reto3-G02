@@ -26,6 +26,8 @@ import controller
 from DISClib.ADT import list as lt
 assert cf
 
+UFOfile = 'UFOS-utf8-small.csv'
+cont = None
 
 """
 La vista se encarga de la interacción con el usuario
@@ -33,11 +35,31 @@ Presenta el menu de opciones y por cada seleccion
 se hace la solicitud al controlador para ejecutar la
 operación solicitada
 """
+def imprimirAvistamiento(lista):
+    for avistamiento in lt.iterator(lista):
+        print()
+        print('fecha y hora: ',avistamiento['datetime'])
+        print('ciudad: ',avistamiento['city'])
+        print('estado: ' ,avistamiento['state'])
+        print('país: '  ,avistamiento['country'])
+        print('forma: '  ,avistamiento['shape'])
+        print('duración en segundos : '  ,avistamiento['duration (seconds)'])
+        print('duración en horas : '  ,avistamiento['duration (hours/min)'])
+        print('comentarios : '  ,avistamiento['comments'])
+        print('dia postead : '  ,avistamiento['date posted'])
+        print('latitud: '  ,avistamiento['latitude'])
+        print('longitud : '  ,avistamiento['longitude'])
+    print()
 
 def printMenu():
     print("Bienvenido")
-    print("1- Cargar información en el catálogo")
-    print("2- ")
+    print("1- Inicializar Analizador")
+    print("2- Cargar información en el catálogo")
+    print("3- Req1, Contar los avistamientos en una ciudad")
+    print("4- Req2, Contar los avistamientos por duración")
+    print("5- Req3, Contar avistamientos por Hora/Minutos del día")
+    print("6- Req4. Contar los avistamientos en un rango de fechas")
+    print("7- Req5, Contar los avistamientos de una Zona Geográfica")
 
 catalog = None
 
@@ -48,9 +70,18 @@ while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
-        print("Cargando información de los archivos ....")
+        print("\nInicializando....")
+        # cont es el controlador que se usará de acá en adelante
+        cont = controller.init()
 
     elif int(inputs[0]) == 2:
+        print("\nCargando información de avistamientos ....")
+        controller.loadData(cont, UFOfile)
+        print('Avistamientos cargados: ' + str(controller.AvistamientoSize(cont)))
+        listaAvistamientos=controller.getAvistamientos(cont)
+        imprimirAvistamiento(listaAvistamientos)
+
+    elif int(inputs[0]) == 3:
         pass
 
     else:
