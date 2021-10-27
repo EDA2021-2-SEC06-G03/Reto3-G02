@@ -30,7 +30,7 @@ import config as cf
 from DISClib.ADT import list as lt
 from DISClib.ADT import map as mp
 from DISClib.DataStructures import mapentry as me
-from DISClib.Algorithms.Sorting import shellsort as sa
+from DISClib.Algorithms.Sorting import insertionsort as ins
 from DISClib.ADT import orderedmap as om
 from DISClib.ADT import map as m
 import datetime
@@ -59,6 +59,8 @@ def newAnalyzer():
     analyzer['avistamiento'] = lt.newList('SINGLE_LINKED', compareIds)
     analyzer['dateIndex'] = om.newMap(omaptype='RBT',
                                       comparefunction=compareDates)
+    analyzer['City'] = om.newMap(omaptype='RBT',
+                                      comparefunction=compareCity)
     return analyzer
 
 def addAvistamiento(analyzer, Avistamiento):
@@ -66,6 +68,7 @@ def addAvistamiento(analyzer, Avistamiento):
     """
     lt.addLast(analyzer['avistamiento'], Avistamiento)
     updateDateIndex(analyzer['dateIndex'], Avistamiento)
+    updatecity(Avistamiento,analyzer['City'])
     return analyzer
 
 def updateDateIndex(map, avistamiento):
@@ -87,6 +90,16 @@ def updateDateIndex(map, avistamiento):
         datentry = me.getValue(entry)
     addDateIndex(datentry, avistamiento)
     return map
+def updatecity(avistamiento,cities):
+    city = avistamiento['city']
+    entry = om.get(cities,city )
+    if entry is None:
+        cityentry = newCityEntry()
+        om.put(cities,city, cityentry)
+    else:
+        cityentry = me.getValue(entry)
+    AddCity(cityentry, avistamiento)
+    return city
 
 def addDateIndex(datentry, avistamiento):
     """
@@ -107,6 +120,11 @@ def addDateIndex(datentry, avistamiento):
         entry = me.getValue(offentry)
         lt.addLast(entry['lsttiempos'], avistamiento)
     return datentry
+def AddCity(cityentry,avistamiento):
+    lst = cityentry['ltavistamiento']
+    lt.addLast(lst, avistamiento)
+    
+    return cityentry
 
 def newDataEntry(avistamiento):
     """
@@ -119,6 +137,11 @@ def newDataEntry(avistamiento):
                                      comparefunction=compareUFOS)
     entry['lstavistamiento'] = lt.newList('SINGLE_LINKED', compareDates)
     return entry
+def newCityEntry():
+    entry = { 'lstavistamiento': None}
+    entry['ltavistamiento'] = lt.newList('SINGLE_LINKED', compareCity)
+    return entry
+
 
 def nuevosavistamientosUFOS(nuevosUFO, avistamiento):
     """
@@ -128,7 +151,30 @@ def nuevosavistamientosUFOS(nuevosUFO, avistamiento):
     UFO = {'avistamientoUFO': None, 'lsttiempos': None}
     UFO['avistamientoUFO'] = nuevosUFO
     UFO['lsttiempos'] = lt.newList('SINGLELINKED', compareUFOS)
+    UFO['ltcity'] = lt.newList('SINGLELINKED', compareUFOS)
     return UFO
+
+def totalAvistamientosCiudad(analyzer,city):
+    lst = om.values(analyzer['City'],om.minKey(analyzer['City']),om.maxKey(analyzer['City']))
+    entry = om.get(analyzer['City'],city )
+    cityentry = me.getValue(entry)
+    cantidad=lt.size(cityentry["ltavistamiento"])
+    listaordenada= ins.sort(cityentry["ltavistamiento"],cmpFechas)
+    listas=lt.newList()
+    primeros3= lt.subList(listaordenada,1,3)
+    ultimos3=lt.subList(listaordenada,lt.size(listaordenada)-2,3)
+    for avistamiento in lt.iterator(primeros3):
+        lt.addLast(listas,avistamiento)
+    for avistamiento in lt.iterator(ultimos3):
+        lt.addLast(listas,avistamiento)
+
+    #for avistamiento in lt.iterator(cityentry["lstavistamiento"]):
+    return cantidad,listas
+
+
+
+    
+
 # Funciones para agregar informacion al catalogo
 
 # Funciones para creacion de datos
@@ -147,12 +193,18 @@ def getAvistamientos(analyzer):
     lst = om.values(analyzer['dateIndex'],om.minKey(analyzer['dateIndex']),om.maxKey(analyzer['dateIndex']))
     listas=lt.newList()
     primeros5= lt.subList(lst,1,5)
-    ultimos5=lt.subList(lst,lt.size(lst)-5,5)
+    ultimos5=lt.subList(lst,lt.size(lst)-4,5)
     for lstdate in lt.iterator(primeros5):
         lt.addLast(listas,lt.getElement(lstdate['lstavistamiento'],1))
     for lstdate in lt.iterator(ultimos5):
         lt.addLast(listas,lt.getElement(lstdate['lstavistamiento'],1))
     return listas
+def getCity(analyzer):
+    """
+    Retorna los avistamientos.
+    """
+    lst = om.values(analyzer['City'],om.minKey(analyzer['City']),om.maxKey(analyzer['City']))
+    return lst
 
 def getCrimesByRange(analyzer, initialDate, finalDate):
     """
@@ -201,6 +253,16 @@ def compareDates(date1, date2):
         return 1
     else:
         return -1
+def compareCity(city1, city2):
+    """
+    Compara dos fechas
+    """
+    if (city1 == city2):
+        return 0
+    elif (city1 > city2):
+        return 1
+    else:
+        return -1
     
 def compareUFOS(ufo1, ufo2):
     """
@@ -213,5 +275,13 @@ def compareUFOS(ufo1, ufo2):
         return 1
     else:
         return -1
+def cmpFechas(avistamiento1, avistamiento2):
+    fecha1 = avistamiento1['datetime']
+    fecha2 = avistamiento2['datetime']
+    if fecha1 < fecha2:
+        r=True 
+    else:
+        r = False
+    return r
 
 # Funciones de ordenamiento

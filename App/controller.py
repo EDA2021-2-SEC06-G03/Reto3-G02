@@ -60,6 +60,11 @@ def AvistamientoSize(analyzer):
 # Funciones para la carga de datos
 def getAvistamientos(analyzer):
     return model.getAvistamientos(analyzer)
+def getcity(analyzer):
+    return model.getCity(analyzer)
+def updatecity(map,avistamiento,cities):
+    return model.updatecity(map,avistamiento,cities)
+
 
 def getCrimesByRange(analyzer, initialDate, finalDate):
     """
@@ -80,6 +85,8 @@ def getCrimesByRangeCode(analyzer, initialDate,
     initialDate = datetime.datetime.strptime(initialDate, '%Y-%m-%d')
     return model.getCrimesByRangeCode(analyzer, initialDate.date(),
                                       offensecode)
+def totalAvistamientosCiudad(analyzer,city):
+    return model.totalAvistamientosCiudad(analyzer,city)
 
 # Funciones de ordenamiento
 

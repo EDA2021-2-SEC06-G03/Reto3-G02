@@ -50,6 +50,18 @@ def imprimirAvistamiento(lista):
         print('latitud: '  ,avistamiento['latitude'])
         print('longitud : '  ,avistamiento['longitude'])
     print()
+def imprimirCiudades(lista):
+    for avistamiento in lt.iterator(lista):
+        print()
+        print('fecha y hora: ',avistamiento['datetime'])
+        print('ciudad: ',avistamiento['city'])
+        print('país: '  ,avistamiento['country'])
+        print('duración en segundos : '  ,avistamiento['duration (seconds)'])
+        print('forma: '  ,avistamiento['shape'])
+    print()
+      
+
+
 
 def printMenu():
     print("Bienvenido")
@@ -73,6 +85,7 @@ while True:
         print("\nInicializando....")
         # cont es el controlador que se usará de acá en adelante
         cont = controller.init()
+        
 
     elif int(inputs[0]) == 2:
         print("\nCargando información de avistamientos ....")
@@ -82,7 +95,13 @@ while True:
         imprimirAvistamiento(listaAvistamientos)
 
     elif int(inputs[0]) == 3:
-        pass
+       ciudad=input("Ingrese la ciudad a consultar")
+       cantidad,listas =controller.totalAvistamientosCiudad(cont,ciudad)
+       print( "============ Respuesta Requerimiento 1 ============")
+       print("Hay"+str(cantidad)+"avistamientos en"+ciudad)
+       print("Los primeros 3 y los untimos 3 avistamientos en la ciudad"+ciudad+"son:")
+       imprimirCiudades(listas)
+
 
     else:
         sys.exit(0)
