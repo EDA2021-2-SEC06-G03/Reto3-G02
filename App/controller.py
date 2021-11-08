@@ -25,10 +25,10 @@ import model
 import datetime
 import csv
 
-
 """
 El controlador se encarga de mediar entre la vista y el modelo.
 """
+
 
 # Inicialización del Catálogo de libros
 
@@ -39,6 +39,7 @@ def init():
     # catalog es utilizado para interactuar con el modelo
     analyzer = model.newAnalyzer()
     return analyzer
+
 
 def loadData(analyzer, avistamientofile):
     """
@@ -51,43 +52,54 @@ def loadData(analyzer, avistamientofile):
         model.addAvistamiento(analyzer, avistamiento)
     return analyzer
 
+
 def AvistamientoSize(analyzer):
     """
     Numero de crimenes leidos
     """
     return model.AvistamientoSize(analyzer)
 
+
 # Funciones para la carga de datos
 def getAvistamientos(analyzer):
     return model.getAvistamientos(analyzer)
+
+
 def getcity(analyzer):
     return model.getCity(analyzer)
-def updatecity(map,avistamiento,cities):
-    return model.updatecity(map,avistamiento,cities)
 
 
-def getCrimesByRange(analyzer, initialDate, finalDate):
+def updatecity(map, avistamiento, cities):
+    return model.updatecity(map, avistamiento, cities)
+
+
+def getavistamientoByRange(analyzer, initialDate, finalDate):
     """
     Retorna el total de crimenes en un rango de fechas
     """
     initialDate = datetime.datetime.strptime(initialDate, '%Y-%m-%d')
     finalDate = datetime.datetime.strptime(finalDate, '%Y-%m-%d')
-    return model.getCrimesByRange(analyzer, initialDate.date(),
-                                  finalDate.date())
+    return model.getAvistamientosByRange(analyzer, initialDate.date(),
+                                         finalDate.date())
 
 
-def getCrimesByRangeCode(analyzer, initialDate,
-                         offensecode):
-    """
-    Retorna el total de crimenes de un tipo especifico en una
-    fecha determinada
-    """
-    initialDate = datetime.datetime.strptime(initialDate, '%Y-%m-%d')
-    return model.getCrimesByRangeCode(analyzer, initialDate.date(),
-                                      offensecode)
-def totalAvistamientosCiudad(analyzer,city):
-    return model.totalAvistamientosCiudad(analyzer,city)
+def totalAvistamientosCiudad(analyzer, city):
+    return model.totalAvistamientosCiudad(analyzer, city)
 
+
+def coordenadas(analyzer, longitudMinima, longitudMaxima, latitudMinima, latitudMaxima):
+    longitudMaxima = round(float(longitudMaxima), 2)
+    longitudMinima = round(float(longitudMinima), 2)
+    latitudMinima = round(float(latitudMinima), 2)
+    latitudMaxima = round(float(latitudMaxima), 2)
+    return model.avistamientosPorCoordenada(analyzer, longitudMinima, longitudMaxima, latitudMinima, latitudMaxima)
+def duracionSegundos(analyzer, minSegundos, maxSegundos):
+    return model.getAvistamientosSegundos(analyzer, minSegundos, maxSegundos)
+
+def duracionHM(analyzer, minHoras, maxHoras):
+    minHoras = datetime.datetime.strptime(minHoras, '%H:%M:%S')
+    maxHoras = datetime.datetime.strptime(maxHoras, '%H:%M:%S')
+    return model.getAvistamientosHoras(analyzer, minHoras.time(), maxHoras.time())
 # Funciones de ordenamiento
 
 # Funciones de consulta sobre el catálogo
