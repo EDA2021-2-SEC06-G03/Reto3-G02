@@ -29,11 +29,9 @@ import config as cf
 from DISClib.ADT import list as lt
 from DISClib.ADT import map as mp
 from DISClib.DataStructures import mapentry as me
-from DISClib.Algorithms.Sorting import insertionsort as ins
 from DISClib.ADT import orderedmap as om
 from DISClib.ADT import map as m
 import datetime
-
 
 assert cf
 
@@ -67,10 +65,12 @@ def newAnalyzer():
 
     analyzer['longitude'] = om.newMap(omaptype='RBT',
                                       comparefunction=compare)
+
     analyzer['duracionS'] = om.newMap(omaptype='RBT',
                                       comparefunction=compare)
+
     analyzer['duracionHM'] = om.newMap(omaptype='RBT',
-                                      comparefunction=compare)
+                                       comparefunction=compare)
     return analyzer
 
 
@@ -81,9 +81,11 @@ def addAvistamiento(analyzer, avistamiento):
     updateDateIndex(analyzer['dateIndex'], avistamiento)
     updateCity(analyzer['city'], avistamiento)
     updateLongitude(analyzer['longitude'], avistamiento)
-    updateDuracion(analyzer['duracionS'],avistamiento)
-    updateDuracionHM(analyzer['duracionHM'],avistamiento)
+    updateDuracion(analyzer['duracionS'], avistamiento)
+    updateDuracionHM(analyzer['duracionHM'], avistamiento)
     return analyzer
+
+
 def addDuracionIndex(datentry, avistamiento):
     """
     Actualiza un indice de tipo de crimenes.  Este indice tiene una lista
@@ -97,14 +99,6 @@ def addDuracionIndex(datentry, avistamiento):
 
 
 def updateDateIndex(map, avistamiento):
-    """
-    Se toma la fecha del crimen y se busca si ya existe en el arbol
-    dicha fecha.  Si es asi, se adiciona a su lista de crimenes
-    y se actualiza el indice de tipos de crimenes.
-
-    Si no se encuentra creado un nodo para esa fecha en el arbol
-    se crea y se actualiza el indice de tipos de crimenes
-    """
     datetimes = avistamiento['datetime']
     fechaavistamiento = datetime.datetime.strptime(datetimes, '%Y-%m-%d %H:%M:%S')
     entry = om.get(map, fechaavistamiento.date())
@@ -139,6 +133,8 @@ def updateLongitude(longitudes, avistamiento):
         longitudentry = me.getValue(entry)
     AddLongitude(longitudentry, avistamiento)
     return longitud
+
+
 def updateDuracion(map, avistamiento):
     duracion = float(avistamiento['duration (seconds)'])
     entry = om.get(map, duracion)
@@ -149,6 +145,7 @@ def updateDuracion(map, avistamiento):
         datentry = me.getValue(entry)
     addDuracionIndex(datentry, avistamiento)
     return map
+
 
 def updateDuracionHM(map, avistamiento):
     fechashoras = datetime.datetime.strptime(avistamiento['datetime'], '%Y-%m-%d %H:%M:%S')
@@ -173,7 +170,7 @@ def addDateIndex(datentry, avistamiento):
     lt.addLast(lst, avistamiento)
     avistamientoUFOIndex = datentry['avistamientoUFOIndex']
     offentry = m.get(avistamientoUFOIndex, avistamiento['datetime'])
-    if (offentry is None):
+    if offentry is None:
         entry = nuevosavistamientosUFOS(avistamiento['datetime'], avistamiento)
         lt.addLast(entry['lsttiempos'], avistamiento)
         m.put(avistamientoUFOIndex, avistamiento['datetime'], entry)
@@ -186,7 +183,6 @@ def addDateIndex(datentry, avistamiento):
 def AddCity(cityentry, avistamiento):
     lst = cityentry['ltavistamiento']
     lt.addLast(lst, avistamiento)
-
     return cityentry
 
 
@@ -210,7 +206,7 @@ def newDataEntry(avistamiento):
     binario.
     """
     entry = {'avistamientoUFOIndex': None, 'lstavistamiento': None}
-    entry['avistamientoUFOIndex'] = m.newMap(numelements=30,
+    entry['avistamientoUFOIndex'] = m.newMap(numelements=100,
                                              maptype='PROBING',
                                              comparefunction=compareUFOS)
     entry['lstavistamiento'] = lt.newList('SINGLE_LINKED', compare)
@@ -225,7 +221,7 @@ def newCityEntry():
 
 def newLongitudeEntry(longitud):
     longitudEntry = {'longitud': longitud, 'latitudes': None}
-    longitudEntry['latitudes'] = m.newMap(numelements=1000,
+    longitudEntry['latitudes'] = m.newMap(numelements=100,
                                           maptype='PROBING',
                                           comparefunction=compareUFOS)
     return longitudEntry
@@ -235,17 +231,19 @@ def newLatitudeEntry(latitude):
     latitudeEntry = {'latitud': latitude, 'avistamientos': None}
     latitudeEntry['avistamientos'] = lt.newList('SINGLE_LINKED', compare)
     return latitudeEntry
-def newDataFechaS():
 
+
+def newDataFechaS():
     entry = {'lstavistamiento': None}
     entry['lstavistamiento'] = lt.newList('SINGLE_LINKED', compareDates)
     return entry
+
 
 def newDataFechaHM():
-
     entry = {'lstavistamiento': None}
     entry['lstavistamiento'] = lt.newList('SINGLE_LINKED', compareDates)
     return entry
+
 
 def nuevosavistamientosUFOS(nuevosUFO, avistamiento):
     """
@@ -260,19 +258,19 @@ def nuevosavistamientosUFOS(nuevosUFO, avistamiento):
 
 
 def totalAvistamientosCiudad(analyzer, city):
-    lst = om.values(analyzer['city'], om.minKey(analyzer['city']), om.maxKey(analyzer['city'])) # 1
-    entry = om.get(analyzer['city'], city) # 1
-    ciudades = lt.size(lst) # 1
+    lst = om.values(analyzer['city'], om.minKey(analyzer['city']), om.maxKey(analyzer['city']))  # 1
+    entry = om.get(analyzer['city'], city)  # 1
+    ciudades = lt.size(lst)  # 1
     cityentry = me.getValue(entry)
     cantidad = lt.size(cityentry["ltavistamiento"])
-    listaordenada = ins.sort(cityentry["ltavistamiento"], cmpFechas)
+    listaordenada = sort(cityentry["ltavistamiento"], cmpFechas)
     listas = lt.newList()
     primeros3 = lt.subList(listaordenada, 1, 3)
     ultimos3 = lt.subList(listaordenada, lt.size(listaordenada) - 2, 3)
-    for avistamiento in lt.iterator(primeros3): # n
-        lt.addLast(listas, avistamiento)        # n
-    for avistamiento in lt.iterator(ultimos3): # n
-        lt.addLast(listas, avistamiento)        # n
+    for avistamiento in lt.iterator(primeros3):  # n
+        lt.addLast(listas, avistamiento)  # n
+    for avistamiento in lt.iterator(ultimos3):  # n
+        lt.addLast(listas, avistamiento)  # n
 
     return cantidad, listas, ciudades
 
@@ -310,23 +308,26 @@ def getCity(analyzer):
     """
     lst = om.values(analyzer['city'], om.minKey(analyzer['city']), om.maxKey(analyzer['city']))
     return lst
+
+
 def getAvistamientosSegundos(analyzer, minSegundos, maxSegundos):
-    maxSegundos=float(maxSegundos)
-    minSegundos=float(minSegundos)
+    maxSegundos = float(maxSegundos)
+    minSegundos = float(minSegundos)
+    print(maxSegundos)
     lst = om.values(analyzer['duracionS'], minSegundos, maxSegundos)
-    lt.size(lst)# -> 3
+    lt.size(lst)  # -> 3
     cantidad = 0
     dur_max = 0
 
     listaNueva = lt.newList()
-    for node in lt.iterator(lst):   # segundos 14 - 20
-        for avistamiento in lt.iterator(node['lstavistamiento']):        # 1990 - 1990
+    for node in lt.iterator(lst):  # segundos 14 - 20
+        for avistamiento in lt.iterator(node['lstavistamiento']):  # 1990 - 1990
             lt.addLast(listaNueva, avistamiento)
             if float(avistamiento['duration (seconds)']) > dur_max:
                 dur_max = float(avistamiento['duration (seconds)'])
         cantidad += lt.size(node['lstavistamiento'])
 
-    listaOrdenada = ins.sort(listaNueva, cmpFechas)
+    listaOrdenada = sort(listaNueva, cmpFechas)
     primeros3 = lt.subList(listaOrdenada, 1, 3)
     ultimos3 = lt.subList(listaOrdenada, lt.size(listaOrdenada) - 2, 3)
 
@@ -335,23 +336,23 @@ def getAvistamientosSegundos(analyzer, minSegundos, maxSegundos):
         lt.addLast(listas, avistamiento)
     for avistamiento in lt.iterator(ultimos3):
         lt.addLast(listas, avistamiento)
-
     return cantidad, dur_max, listas
+
 
 def getAvistamientosHoras(analyzer, minHoras, maxHoras):
     lst = om.values(analyzer['duracionHM'], minHoras, maxHoras)
-    lt.size(lst)# -> 3
+    lt.size(lst)  # -> 3
     cantidad = 0
     dur_max = 0
-    lst2 = om.values(analyzer['duracionHM'], om.minKey(analyzer['duracionHM']),om.maxKey(analyzer['duracionHM']))
-    cantidad2= lt.size(lst2)
+    lst2 = om.values(analyzer['duracionHM'], om.minKey(analyzer['duracionHM']), om.maxKey(analyzer['duracionHM']))
+    cantidad2 = lt.size(lst2)
     listaNueva = lt.newList()
-    for node in lt.iterator(lst):   # segundos 14 - 20
-        for avistamiento in lt.iterator(node['lstavistamiento']):        # 1990 - 1990
+    for node in lt.iterator(lst):  # segundos 14 - 20
+        for avistamiento in lt.iterator(node['lstavistamiento']):  # 1990 - 1990
             lt.addLast(listaNueva, avistamiento)
         cantidad += lt.size(node['lstavistamiento'])
 
-    listaOrdenada = ins.sort(listaNueva, cmpFechas)
+    listaOrdenada = sort(listaNueva, cmpFechas)
     primeros3 = lt.subList(listaOrdenada, 1, 3)
     ultimos3 = lt.subList(listaOrdenada, lt.size(listaOrdenada) - 2, 3)
 
@@ -361,21 +362,22 @@ def getAvistamientosHoras(analyzer, minHoras, maxHoras):
     for avistamiento in lt.iterator(ultimos3):
         lt.addLast(listas, avistamiento)
 
-    return cantidad, dur_max, listas,cantidad2
+    return cantidad, dur_max, listas, cantidad2
+
 
 def getAvistamientosByRange(analyzer, initialDate, finalDate):
     lst = om.values(analyzer['dateIndex'], initialDate, finalDate)
     listaFechas = om.values(analyzer['dateIndex'], om.minKey(analyzer['dateIndex']), om.maxKey(analyzer['dateIndex']))
     fechas = lt.size(listaFechas)
     totufos = 0
-    listaavistamientos = lt.newList() #O(1)
-    for fecha in lt.iterator(lst): #O(n)
-        totufos += lt.size(fecha['lstavistamiento']) #O(n)
-        for avistamiento in lt.iterator(fecha['lstavistamiento']): #O(n2)
-            lt.addLast(listaavistamientos, avistamiento)           #O(n2)
+    listaavistamientos = lt.newList()  # O(1)
+    for fecha in lt.iterator(lst):  # O(n)
+        totufos += lt.size(fecha['lstavistamiento'])  # O(n)
+        for avistamiento in lt.iterator(fecha['lstavistamiento']):  # O(n2)
+            lt.addLast(listaavistamientos, avistamiento)  # O(n2)
 
     # n2
-    listaavistamientos = ins.sort(listaavistamientos, cmpFechas)
+    listaavistamientos = sort(listaavistamientos, cmpFechas)
 
     listas = lt.newList()
     primeros5 = lt.subList(listaavistamientos, 1, 3)
@@ -391,18 +393,18 @@ def avistamientosPorCoordenada(analyzer, longitudMinima, longitudMaxima, latitud
     # longitudes= om.values(analyzer['longitude'], longitudMinima, longitudMaxima)
     # longitudes = om.values(analyzer['longitude'], om.maxKey(analyzer['longitude']), om.minKey(analyzer['longitude']))
     longitudes = om.values(analyzer['longitude'], longitudMaxima, longitudMinima)
-    #print(longitudes)
+    # print(longitudes)
     listaavistamientos = lt.newList()
 
-    for longitud in lt.iterator(longitudes):   #O(n)
+    for longitud in lt.iterator(longitudes):  # O(n)
 
         latitudes = mp.valueSet(longitud["latitudes"])
-        for latitud in lt.iterator(latitudes):  #O(n2)
+        for latitud in lt.iterator(latitudes):  # O(n2)
 
-            if latitudMinima < latitud['latitud'] < latitudMaxima: #O(n2)
-                for avistamiento in lt.iterator(latitud['avistamientos']): #O(n3)
-                    lt.addLast(listaavistamientos, avistamiento)#O(n3)
-    listaavistamientos = ins.sort(listaavistamientos, cmpFechas)
+            if latitudMinima < latitud['latitud'] < latitudMaxima:  # O(n2)
+                for avistamiento in lt.iterator(latitud['avistamientos']):  # O(n3)
+                    lt.addLast(listaavistamientos, avistamiento)  # O(n3)
+    listaavistamientos = sort(listaavistamientos, cmpFechas)
 
     if lt.size(listaavistamientos) > 10:
         listas = lt.newList()
@@ -451,6 +453,8 @@ def cmpFechas(avistamiento1, avistamiento2):
     else:
         r = False
     return r
+
+
 def compareDates(date1, date2):
     """
     Compara dos fechas

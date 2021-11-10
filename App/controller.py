@@ -21,7 +21,7 @@
  """
 
 import config as cf
-import model
+import model 
 import datetime
 import csv
 
@@ -93,8 +93,11 @@ def coordenadas(analyzer, longitudMinima, longitudMaxima, latitudMinima, latitud
     latitudMinima = round(float(latitudMinima), 2)
     latitudMaxima = round(float(latitudMaxima), 2)
     return model.avistamientosPorCoordenada(analyzer, longitudMinima, longitudMaxima, latitudMinima, latitudMaxima)
+
+
 def duracionSegundos(analyzer, minSegundos, maxSegundos):
     return model.getAvistamientosSegundos(analyzer, minSegundos, maxSegundos)
+
 
 def duracionHM(analyzer, minHoras, maxHoras):
     minHoras = datetime.datetime.strptime(minHoras, '%H:%M:%S')

@@ -133,6 +133,43 @@ def printMenu():
     print("7- Req5, Contar los avistamientos de una Zona Geográfica")
     print("8- Req6, Visualizar los avistamientos de una zona geográfica")
 
+def imprimirLongitud(lista):
+    if lt.size(lista) >= 10:
+        lista = obtener10(lista)
+    for avistamiento in lt.iterator(lista):
+        print()
+        print('fecha y hora: ', avistamiento['datetime'])
+        print('ciudad: ', avistamiento['city'])
+        print('país: ', avistamiento['country'])
+        print('duración en segundos : ', avistamiento['duration (seconds)'])
+        print('forma: ', avistamiento['shape'])
+    print()
+
+
+def guardarMapa(lista, longitudMinima, latitudMinima):
+    mapa = folium.Map(location=[latitudMinima, longitudMinima], zoom_start=6)
+    for avistamiento in lt.iterator(lista):
+        html = "<table>" \
+               "<tr>" \
+               "<th> City </th>" \
+               "<th> Datetime </th>" \
+               "<th> Duration (s) </th>" \
+               "<th> Shape </th>" \
+               "<th> Comments </th>" \
+               "</tr>"
+        html = html + "<tr><td>" + str(avistamiento['city']) + "</td>" \
+                                                               "<td>" + str(avistamiento['datetime']) + "</td>" \
+                                                                                                        "<td>" + str(
+            avistamiento['duration (seconds)']) + "</td>" \
+                                                  "<td>" + str(avistamiento['shape']) + "</td>" \
+                                                                                        "<td>" + str(
+            avistamiento['comments']) + "</td></tr></table> "
+        folium.Marker(
+            location=[avistamiento['latitude'], avistamiento['longitude']],
+            popup=folium.Popup(html, min_width=600, max_width=600),
+            tooltip="Click para expandir"
+        ).add_to(mapa)
+    mapa.save("mapa.html")
 
 catalog = None
 
@@ -156,20 +193,22 @@ while True:
         imprimirAvistamiento(listaAvistamientos)
 
     elif int(inputs[0]) == 3:
-        ciudad = input("Ingrese la ciudad a consultar")
+        ciudad = input("Ingrese la ciudad a consultar: ")
         cantidad, listas, ciudades = controller.totalAvistamientosCiudad(cont, ciudad)
         print("============ Respuesta Requerimiento 1 ============")
         print("hay", ciudades, "diferentes con avistamientos de UFOS")
-        print("Hay" + str(cantidad) + "avistamientos en" + ciudad)
+        print("Hay" + str(cantidad) + "avistamientos en:  " + ciudad)
         print("Los primeros 3 y los untimos 3 avistamientos en la ciudad" + ciudad + "son:")
         imprimirCiudades(listas)
+
     elif int(inputs[0]) == 4:
-        entregarSmax = input("inserte una duración de segundos maxima: ")
         entregarSmin = input("inserte una duración de segundos minima: ")
+        entregarSmax = input("inserte una duración de segundos maxima: ")
         cantidad, dur_max, listas = controller.duracionSegundos(cont, entregarSmin, entregarSmax)
         print(" la cantidad total de avistamientos es: ", cantidad)
-        print("la duracion maxima es de: ",dur_max)
+        print("la duracion maxima es de: ", dur_max)
         imprimirduracionS(listas)
+
     elif int(inputs[0]) == 5:
         entregarHmax = input("inserte una hora y minuto maxima del dia: ")
         entregarHmin = input("inserte una hora y minuto minima del dia: ")
@@ -179,8 +218,8 @@ while True:
         imprimirduracionS(listas)
 
     elif int(inputs[0]) == 6:
-        fechainicial = input("ingrese la fecha inicial")
-        fechafinal = input("ingrese la fecha final")
+        fechainicial = input("ingrese la fecha inicial:  ")
+        fechafinal = input("ingrese la fecha final:  ")
         listas, totufos, fecha = controller.getavistamientoByRange(cont, fechainicial, fechafinal)
         print("============ Respuesta Requerimiento 4 ============")
         print("Hay", fecha, "diferentes fechas de avistamiento de UFOS")
@@ -189,23 +228,24 @@ while True:
         imprimirFechas(listas)
 
     elif int(inputs[0]) == 7:
-        longitudMinima = input("ingrese una longitud minima")
-        longitudMaxima = input("ingrese una longitud maxima")
-        latitudMinima = input("ingrese una latitud minima")
-        latitudMaxima = input("ingrese una latitud maxima")
+        longitudMinima = input("ingrese una longitud minima: ")
+        longitudMaxima = input("ingrese una longitud maxima:  ")
+        latitudMinima = input("ingrese una latitud minima:  ")
+        latitudMaxima = input("ingrese una latitud maxima:  ")
         listas, cantidad = controller.coordenadas(cont, longitudMinima, longitudMaxima, latitudMinima, latitudMaxima)
         print("============ Respuesta Requerimiento 5 ============")
         print("Hay", cantidad, "diferentes avistamiento en esta  area")
         print("Los primeros 5 y los untimos 5 avistamientos en este tiempo son :")
-        imprimirLongitud(listas, False)
+        imprimirLongitud(listas)
 
     elif int(inputs[0]) == 8:
-        longitudMinima = input("ingrese una longitud minima")
-        longitudMaxima = input("ingrese una longitud maxima")
-        latitudMinima = input("ingrese una latitud minima")
-        latitudMaxima = input("ingrese una latitud maxima")
+        longitudMinima = input("ingrese una longitud minima:  ")
+        longitudMaxima = input("ingrese una longitud maxima. ")
+        latitudMinima = input("ingrese una latitud minima:  ")
+        latitudMaxima = input("ingrese una latitud maxima: ")
         listas, cantidad = controller.coordenadas(cont, longitudMinima, longitudMaxima, latitudMinima, latitudMaxima)
         print("============ Respuesta Requerimiento 6 ============")
         print("Hay ", cantidad, " diferentes avistamiento en esta  area")
         print("Los primeros 5 y los ultimos 5 avistamientos en este tiempo son :")
-        imprimirLongitud(listas, True)
+        imprimirLongitud(listas)
+        guardarMapa(listas, longitudMinima, latitudMinima)

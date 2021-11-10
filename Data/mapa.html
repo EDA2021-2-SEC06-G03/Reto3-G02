@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_a38e66371af94b168df9d044082de284 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+            <div class="folium-map" id="map_a38e66371af94b168df9d044082de284" ></div>
+        
+</body>
+<script>    
+    
+            var map_a38e66371af94b168df9d044082de284 = L.map(
+                "map_a38e66371af94b168df9d044082de284",
+                {
+                    center: [31.33, -103.0],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 6,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_9eb623f6c2074c1195367addfc04bcff = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_a38e66371af94b168df9d044082de284);
+        
+    
+            var marker_2a473591356d4ac2b54c78ca9ee5a829 = L.marker(
+                [34.4047222, -103.2047222],
+                {}
+            ).addTo(map_a38e66371af94b168df9d044082de284);
+        
+    
+        var popup_778a3e8bbe1642d1b8bb3a5a687519a3 = L.popup({"maxWidth": 600, "minWidth": 600});
+
+        
+            var html_2636f4530777412ab3a080d2f6c3a6a3 = $(`<div id="html_2636f4530777412ab3a080d2f6c3a6a3" style="width: 100.0%; height: 100.0%;"><table><tr><th> City </th><th> Datetime </th><th> Duration (s) </th><th> Shape </th><th> Comments </th></tr><tr><td>clovis</td><td>1944-04-02 11:00:00</td><td>90.0</td><td>disk</td><td>Saw UFO in 1944 over an airbase in New Mexico&#44 not very far from&#44 Roswell.</td></tr></table> </div>`)[0];
+            popup_778a3e8bbe1642d1b8bb3a5a687519a3.setContent(html_2636f4530777412ab3a080d2f6c3a6a3);
+        
+
+        marker_2a473591356d4ac2b54c78ca9ee5a829.bindPopup(popup_778a3e8bbe1642d1b8bb3a5a687519a3)
+        ;
+
+        
+    
+    
+            marker_2a473591356d4ac2b54c78ca9ee5a829.bindTooltip(
+                `<div>
+                     Click para expandir
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_a069d895ffc84468a133be69b6b14a0c = L.marker(
+                [35.8880556, -106.3063889],
+                {}
+            ).addTo(map_a38e66371af94b168df9d044082de284);
+        
+    
+        var popup_4a9ff51198854a589dea7c43132159ee = L.popup({"maxWidth": 600, "minWidth": 600});
+
+        
+            var html_ed3fd0cf9c5e44aaa6ae32acf6fe3c00 = $(`<div id="html_ed3fd0cf9c5e44aaa6ae32acf6fe3c00" style="width: 100.0%; height: 100.0%;"><table><tr><th> City </th><th> Datetime </th><th> Duration (s) </th><th> Shape </th><th> Comments </th></tr><tr><td>los alamos</td><td>1944-06-01 12:00:00</td><td>3600.0</td><td>disk</td><td>Disk hovers over Los Alamos during the development of the atomic bombs; pursued by planes.</td></tr></table> </div>`)[0];
+            popup_4a9ff51198854a589dea7c43132159ee.setContent(html_ed3fd0cf9c5e44aaa6ae32acf6fe3c00);
+        
+
+        marker_a069d895ffc84468a133be69b6b14a0c.bindPopup(popup_4a9ff51198854a589dea7c43132159ee)
+        ;
+
+        
+    
+    
+            marker_a069d895ffc84468a133be69b6b14a0c.bindTooltip(
+                `<div>
+                     Click para expandir
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_3e7b1ddc23914bffac682b234a796f4c = L.marker(
+                [33.9177778, -106.8652778],
+                {}
+            ).addTo(map_a38e66371af94b168df9d044082de284);
+        
+    
+        var popup_de892c4496854d89bd8d3187099cf6b0 = L.popup({"maxWidth": 600, "minWidth": 600});
+
+        
+            var html_36710ee12be141eeb967df390be0a316 = $(`<div id="html_36710ee12be141eeb967df390be0a316" style="width: 100.0%; height: 100.0%;"><table><tr><th> City </th><th> Datetime </th><th> Duration (s) </th><th> Shape </th><th> Comments </th></tr><tr><td>san antonio</td><td>1945-08-16 11:30:00</td><td>777600.0</td><td>oval</td><td>THE CRAFT APPEARED TO HAVE DECENDED AT AN ANGL&#44 SKIDDED OVER A HUNDRED YARDS PUSHING THE DIRT IN FRONT OF IT AND BURIED IT&#39S SELF</td></tr></table> </div>`)[0];
+            popup_de892c4496854d89bd8d3187099cf6b0.setContent(html_36710ee12be141eeb967df390be0a316);
+        
+
+        marker_3e7b1ddc23914bffac682b234a796f4c.bindPopup(popup_de892c4496854d89bd8d3187099cf6b0)
+        ;
+
+        
+    
+    
+            marker_3e7b1ddc23914bffac682b234a796f4c.bindTooltip(
+                `<div>
+                     Click para expandir
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_337142de95b9483aae59c11efb0a3edf = L.marker(
+                [33.3941667, -104.5225],
+                {}
+            ).addTo(map_a38e66371af94b168df9d044082de284);
+        
+    
+        var popup_52a68a8267bc47a6abce5dabe87d1fe2 = L.popup({"maxWidth": 600, "minWidth": 600});
+
+        
+            var html_28e5abc011704921ac553d01a14f7e00 = $(`<div id="html_28e5abc011704921ac553d01a14f7e00" style="width: 100.0%; height: 100.0%;"><table><tr><th> City </th><th> Datetime </th><th> Duration (s) </th><th> Shape </th><th> Comments </th></tr><tr><td>roswell</td><td>1945-12-15 02:00:00</td><td>60.0</td><td>sphere</td><td>Sphere in Roswell. Were aliens looking for thier dead ?</td></tr></table> </div>`)[0];
+            popup_52a68a8267bc47a6abce5dabe87d1fe2.setContent(html_28e5abc011704921ac553d01a14f7e00);
+        
+
+        marker_337142de95b9483aae59c11efb0a3edf.bindPopup(popup_52a68a8267bc47a6abce5dabe87d1fe2)
+        ;
+
+        
+    
+    
+            marker_337142de95b9483aae59c11efb0a3edf.bindTooltip(
+                `<div>
+                     Click para expandir
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_fbce7ec67af8402c9203f48c54dd9d29 = L.marker(
+                [35.9911111, -106.08],
+                {}
+            ).addTo(map_a38e66371af94b168df9d044082de284);
+        
+    
+        var popup_d58740dceb2b456caa3cb5b47bc2366b = L.popup({"maxWidth": 600, "minWidth": 600});
+
+        
+            var html_fbefbb89a7824c63b48f088bb0213558 = $(`<div id="html_fbefbb89a7824c63b48f088bb0213558" style="width: 100.0%; height: 100.0%;"><table><tr><th> City </th><th> Datetime </th><th> Duration (s) </th><th> Shape </th><th> Comments </th></tr><tr><td>espanola (outside of)</td><td>1947-06-01 17:00:00</td><td>300.0</td><td>circle</td><td>Saucer shaped object  about  ten feet in diam.</td></tr></table> </div>`)[0];
+            popup_d58740dceb2b456caa3cb5b47bc2366b.setContent(html_fbefbb89a7824c63b48f088bb0213558);
+        
+
+        marker_fbce7ec67af8402c9203f48c54dd9d29.bindPopup(popup_d58740dceb2b456caa3cb5b47bc2366b)
+        ;
+
+        
+    
+    
+            marker_fbce7ec67af8402c9203f48c54dd9d29.bindTooltip(
+                `<div>
+                     Click para expandir
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_3249b7fa3bbc4913bb7e195c21f334dc = L.marker(
+                [35.2333333, -106.6638889],
+                {}
+            ).addTo(map_a38e66371af94b168df9d044082de284);
+        
+    
+        var popup_d72adc9f5bb143babf16fc5d6d94b9f8 = L.popup({"maxWidth": 600, "minWidth": 600});
+
+        
+            var html_009691a3ee294577bbb5e9815665e55e = $(`<div id="html_009691a3ee294577bbb5e9815665e55e" style="width: 100.0%; height: 100.0%;"><table><tr><th> City </th><th> Datetime </th><th> Duration (s) </th><th> Shape </th><th> Comments </th></tr><tr><td>rio rancho</td><td>2014-04-24 08:45:00</td><td>10.0</td><td>oval</td><td>Circular&#44 metallic silver/white object in sky; Rio Rancho&#44 NM.</td></tr></table> </div>`)[0];
+            popup_d72adc9f5bb143babf16fc5d6d94b9f8.setContent(html_009691a3ee294577bbb5e9815665e55e);
+        
+
+        marker_3249b7fa3bbc4913bb7e195c21f334dc.bindPopup(popup_d72adc9f5bb143babf16fc5d6d94b9f8)
+        ;
+
+        
+    
+    
+            marker_3249b7fa3bbc4913bb7e195c21f334dc.bindTooltip(
+                `<div>
+                     Click para expandir
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_9b097a2415734cf4bcc49e3558bebb75 = L.marker(
+                [35.0844444, -106.6505556],
+                {}
+            ).addTo(map_a38e66371af94b168df9d044082de284);
+        
+    
+        var popup_b18a986d32fa46519d209b85eb07cff4 = L.popup({"maxWidth": 600, "minWidth": 600});
+
+        
+            var html_ea4c713469164941931652f50e71d18b = $(`<div id="html_ea4c713469164941931652f50e71d18b" style="width: 100.0%; height: 100.0%;"><table><tr><th> City </th><th> Datetime </th><th> Duration (s) </th><th> Shape </th><th> Comments </th></tr><tr><td>albuquerque</td><td>2014-04-24 21:00:00</td><td>30.0</td><td>light</td><td>Orange-red light followed by a blinking green and red light; large rumbling noise unlike a plane could be heard.</td></tr></table> </div>`)[0];
+            popup_b18a986d32fa46519d209b85eb07cff4.setContent(html_ea4c713469164941931652f50e71d18b);
+        
+
+        marker_9b097a2415734cf4bcc49e3558bebb75.bindPopup(popup_b18a986d32fa46519d209b85eb07cff4)
+        ;
+
+        
+    
+    
+            marker_9b097a2415734cf4bcc49e3558bebb75.bindTooltip(
+                `<div>
+                     Click para expandir
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_af3ac9eb142c48149b9dc0e6d02650bc = L.marker(
+                [32.77, -108.2797222],
+                {}
+            ).addTo(map_a38e66371af94b168df9d044082de284);
+        
+    
+        var popup_ad5097d570df46e89a19980cb60c684c = L.popup({"maxWidth": 600, "minWidth": 600});
+
+        
+            var html_cc7cbc8fe6d54b25aa72981b1a210413 = $(`<div id="html_cc7cbc8fe6d54b25aa72981b1a210413" style="width: 100.0%; height: 100.0%;"><table><tr><th> City </th><th> Datetime </th><th> Duration (s) </th><th> Shape </th><th> Comments </th></tr><tr><td>silver city</td><td>2014-04-28 20:30:00</td><td>120.0</td><td>light</td><td>Two bright stars that moved and disappeared into the northern sky at dusk in New Mexico.</td></tr></table> </div>`)[0];
+            popup_ad5097d570df46e89a19980cb60c684c.setContent(html_cc7cbc8fe6d54b25aa72981b1a210413);
+        
+
+        marker_af3ac9eb142c48149b9dc0e6d02650bc.bindPopup(popup_ad5097d570df46e89a19980cb60c684c)
+        ;
+
+        
+    
+    
+            marker_af3ac9eb142c48149b9dc0e6d02650bc.bindTooltip(
+                `<div>
+                     Click para expandir
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_f98faf8866454749adbd4335201d30f3 = L.marker(
+                [34.4047222, -103.2047222],
+                {}
+            ).addTo(map_a38e66371af94b168df9d044082de284);
+        
+    
+        var popup_fae064eb7c064edcbd188c637bbdce84 = L.popup({"maxWidth": 600, "minWidth": 600});
+
+        
+            var html_aaef29c2c24943c696929e19656c8326 = $(`<div id="html_aaef29c2c24943c696929e19656c8326" style="width: 100.0%; height: 100.0%;"><table><tr><th> City </th><th> Datetime </th><th> Duration (s) </th><th> Shape </th><th> Comments </th></tr><tr><td>clovis</td><td>2014-04-29 22:00:00</td><td>600.0</td><td>sphere</td><td>I went out to smoke and noticed what i have been seeing alot of lately which is hovering bright structures in the clovis sky that as th</td></tr></table> </div>`)[0];
+            popup_fae064eb7c064edcbd188c637bbdce84.setContent(html_aaef29c2c24943c696929e19656c8326);
+        
+
+        marker_f98faf8866454749adbd4335201d30f3.bindPopup(popup_fae064eb7c064edcbd188c637bbdce84)
+        ;
+
+        
+    
+    
+            marker_f98faf8866454749adbd4335201d30f3.bindTooltip(
+                `<div>
+                     Click para expandir
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_ce629f91ebc7401e994c8195fa1a4f35 = L.marker(
+                [35.563363, -106.770591],
+                {}
+            ).addTo(map_a38e66371af94b168df9d044082de284);
+        
+    
+        var popup_34abbd232ec14582b1c0724f409e12cc = L.popup({"maxWidth": 600, "minWidth": 600});
+
+        
+            var html_cbdd51401c9f4d12b888bf05f9571fdb = $(`<div id="html_cbdd51401c9f4d12b888bf05f9571fdb" style="width: 100.0%; height: 100.0%;"><table><tr><th> City </th><th> Datetime </th><th> Duration (s) </th><th> Shape </th><th> Comments </th></tr><tr><td>san isidro</td><td>2014-05-07 23:30:00</td><td>15.0</td><td>unknown</td><td>2 red lights gliding across sky&#44 then green and red lights flickered on and rotated around the object.</td></tr></table> </div>`)[0];
+            popup_34abbd232ec14582b1c0724f409e12cc.setContent(html_cbdd51401c9f4d12b888bf05f9571fdb);
+        
+
+        marker_ce629f91ebc7401e994c8195fa1a4f35.bindPopup(popup_34abbd232ec14582b1c0724f409e12cc)
+        ;
+
+        
+    
+    
+            marker_ce629f91ebc7401e994c8195fa1a4f35.bindTooltip(
+                `<div>
+                     Click para expandir
+                 </div>`,
+                {"sticky": true}
+            );
+        
+</script>
